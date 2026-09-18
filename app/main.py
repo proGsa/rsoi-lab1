@@ -4,15 +4,13 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
-from app.db import engine, get_db
-from app.models import Person, Base
+from app.db import get_db
+from app.models import Person
 from app.schemas import (
     PersonRequest,
     PersonResponse,
     ValidationErrorResponse,
 )
-
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
