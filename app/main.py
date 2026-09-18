@@ -12,7 +12,7 @@ from app.schemas import (
     ValidationErrorResponse,
 )
 
-# Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
