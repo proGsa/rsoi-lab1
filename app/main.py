@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from app.db import engine, get_db
-from app.models import Person
+from app.models import Person, Base
 from app.schemas import (
     PersonRequest,
     PersonResponse,
