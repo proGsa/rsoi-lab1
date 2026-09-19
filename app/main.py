@@ -9,6 +9,7 @@ from app.models import Person
 from app.schemas import (
     PersonRequest,
     PersonResponse,
+    PersonUpdate,
     ValidationErrorResponse,
 )
 
@@ -33,8 +34,6 @@ async def validation_exception_handler(
         }
     )
 
-
-# Убираем автоматически добавляемый FastAPI ответ 422 из Swagger
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
@@ -91,7 +90,7 @@ def get_person(
 )
 def update_person(
     person_id: int,
-    person_request: PersonRequest,
+    person_request: PersonUpdate,
     db: Session = Depends(get_db)
 ):
     person = db.query(Person).filter(Person.id == person_id).first()
@@ -102,16 +101,22 @@ def update_person(
             detail="Person not found"
         )
 
+    print("BEFORE:", person.id, person.name, person.age, person.address, person.work)
+
     person.name = person_request.name
-    person.age = person_request.age
     person.address = person_request.address
-    person.work = person_request.work
+
+    print("AFTER SET:", person.id, person.name, person.age, person.address, person.work)
 
     db.commit()
+
+    print("AFTER COMMIT:", person.id, person.name, person.age, person.address, person.work)
+
     db.refresh(person)
 
-    return person
+    print("AFTER REFRESH:", person.id, person.name, person.age, person.address, person.work)
 
+    return person
 
 @app.delete("/api/v1/persons/{person_id}")
 def delete_person(

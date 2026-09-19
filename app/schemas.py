@@ -21,3 +21,7 @@ class PersonResponse(BaseModel):
 class ValidationErrorResponse(BaseModel):
     message: str
     errors: dict[str, str]
+
+class PersonUpdate(BaseModel):
+    name: Optional[str] = None
+    address: Optional[str] = None
